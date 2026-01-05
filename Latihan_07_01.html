@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buku Tamu CRUD</title>
+    <link rel="stylesheet" href="bootstrap-5.3.8-dist/bootstrap-5.3.8-dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax.libs/poppar.js/1.16.0/umd/poppar.min.js"></script>
+    <script src="bootstrap-5.3.8-dist/bootstrap-5.3.8-dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Buku Tamu</h2>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Kode</th>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Pesan</th>
+                </tr>
+            </thead>
+            <tbody id="guestTableBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            const script_url='https://script.google.com/a/macros/uniku.ac.id/s/AKfycbzc8A7M3c72i6_3kW1KXG1eidEu81ivqPbandlM1tzEXhErXb_w2GDG7yzVv4thK5b3/exec';
+
+            loadGuests();
+            function loadGuests(){
+                $.ajax({
+                    url:script_url,
+                    success:function(response){
+                        const tbody=$('#guestTableBody');
+                        tbody.empty();
+
+                        response.forEach(guest=>{
+                            tbody.append(
+                                <tr>
+                                    <td>${guest.Kode}</td>
+                                    <td>${guest.Nama}</td>
+                                    <td>${guest.Email}</td>
+                                    <td>${guest.Pesan}</td>
+                                </tr>
+                            );
+                        });
+                    },
+                    error:function(jqXHR, textStatus, errorThrown){
+                        console.error("Request failed:",textStatus,errorThrown);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
